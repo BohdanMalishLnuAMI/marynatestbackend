@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${HOST_PORT:-8001}:8001"
+    environment:
+      PORT: 8001  # За замовчуванням, якщо не вказано в змінній оточення HOST_PORT
+  mongodb:
+    image: mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
